@@ -15,7 +15,7 @@ A simple command-line tool to answer questions about iOS 26 using document index
 - **scikit-learn** — TF-IDF vectorization and cosine similarity for retrieval.
 - **BeautifulSoup4 + Requests** — Web scraping articles about iOS 26.
 - **JSON** — Storing the index and metadata.
-- **CLI Interface** — Using `argparse` for command-line usage.
+- **Streamlit Interface** 
 
 ## Installation
 1. Clone the repository:
@@ -31,15 +31,18 @@ A simple command-line tool to answer questions about iOS 26 using document index
    Add the API key to the code at line 149.
 ## Usage
 
-### Step 1: Build the index
+### Step 1: Run the backend
 ```bash
-python ios26_chat.py --build_index
+python3 ios26_chat.py
 ```
-This reads the source documents (and optionally scrapes fresh articles) and saves a TF-IDF index to disk.
+This will build the index if not already present. 
+For your convenience I have added the index folder with the saved embeddings so it will just load them on starting the backend.
+
+
 
 ### Step 2: Ask a question
 ```bash
-python ios26_chat.py --ask "What are the major features of iOS 26?"
+streamlit run app.py
 ```
 The script will:
 - Retrieve relevant text snippets.
@@ -79,8 +82,5 @@ The script will:
 [8] Everything New in iOS 26 Beta 6 - MacRumors  (2025/08/11)  https://www.macrumors.com/2025/08/11/ios-26-beta-6-features/
 
 ```
-
-## Converting to a Streamlit App
-This can also be extended to have a streamlit frontend for better UX.
 
 
