@@ -27,7 +27,9 @@ A simple command-line tool to answer questions about iOS 26 using document index
    ```bash
    pip install -r requirements.txt
    ```
-
+3. Get gemini api key :
+   Visit https://aistudio.google.com/app/apikey and generate your api key.
+   Add the API key to the code at line 149.
 ## Usage
 
 ### Step 1: Build the index
