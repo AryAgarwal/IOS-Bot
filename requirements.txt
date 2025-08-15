@@ -1,0 +1,9 @@
+google-generativeai
+beautifulsoup4 
+requests 
+scikit-learn 
+fastapi
+uvicorn
+pydantic 
+numpy
+faiss-cpu
