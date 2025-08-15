@@ -21,7 +21,6 @@ A simple command-line tool to answer questions about iOS 26 using document index
 1. Clone the repository:
    ```bash
    git clone <repo_url>
-   cd ios26-qa
    ```
 2. Install dependencies:
    ```bash
