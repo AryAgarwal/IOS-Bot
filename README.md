@@ -33,13 +33,13 @@ A simple command-line tool to answer questions about iOS 26 using document index
 
 ### Step 1: Build the index
 ```bash
-python ios26-chat.py --build_index
+python ios26_chat.py --build_index
 ```
 This reads the source documents (and optionally scrapes fresh articles) and saves a TF-IDF index to disk.
 
 ### Step 2: Ask a question
 ```bash
-python ios26-chat.py --ask "What are the major features of iOS 26?"
+python ios26_chat.py --ask "What are the major features of iOS 26?"
 ```
 The script will:
 - Retrieve relevant text snippets.
