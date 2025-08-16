@@ -147,7 +147,7 @@ def time_decay_weight(date_iso: str, today: dt.date = None) -> float:
 
 # ------------- Embedding / Index -------------
 def configure_gemini():
-    api_key = 'AIzaSyB7aSba5i32fsCH29_M9XyiFfDy9xAqTiQ'
+    api_key = ''
     if not api_key:
         raise RuntimeError("Set GOOGLE_API_KEY env var.")
     genai.configure(api_key=api_key)
