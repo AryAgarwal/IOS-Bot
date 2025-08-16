@@ -25,6 +25,7 @@ import argparse
 import hashlib
 import datetime as dt
 from typing import List, Dict, Any, Tuple
+import uvicorn
 
 import requests
 from bs4 import BeautifulSoup
@@ -146,7 +147,7 @@ def time_decay_weight(date_iso: str, today: dt.date = None) -> float:
 
 # ------------- Embedding / Index -------------
 def configure_gemini():
-    api_key = 'Insert API key here'
+    api_key = 'AIzaSyB7aSba5i32fsCH29_M9XyiFfDy9xAqTiQ'
     if not api_key:
         raise RuntimeError("Set GOOGLE_API_KEY env var.")
     genai.configure(api_key=api_key)
@@ -338,15 +339,16 @@ def ask_question(q: str) -> Tuple[str, List[Dict[str,Any]]]:
 # FastAPI
 app = FastAPI(title="iOS 26 Q&A Bot (RAG + Gemini)")
 
-# @app.on_event("startup")
-# def startup_event():
-#     build_index()
+if not os.path.exists(INDEX_DIR):
+    print("[INFO] Index not found. Building index from scratch...")
+    build_index()
 
 class AskBody(BaseModel):
     question: str
 
 @app.post("/ask")
 def ask_api(body: AskBody):
+
     answer, hits = ask_question(body.question)
     # Return sources explicitly for UI
     sources = [
@@ -357,20 +359,21 @@ def ask_api(body: AskBody):
 
 # ------------- Entrypoint -------------
 if __name__ == "__main__":
-    p = argparse.ArgumentParser()
-    p.add_argument("--build_index", action="store_true", help="Fetch sources and build FAISS + TF-IDF index")
-    p.add_argument("--ask", type=str, default=None, help="Ask a single question on the CLI")
-    args = p.parse_args()
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # p = argparse.ArgumentParser()
+    # p.add_argument("--build_index", action="store_true", help="Fetch sources and build FAISS + TF-IDF index")
+    # p.add_argument("--ask", type=str, default=None, help="Ask a single question on the CLI")
+    # args = p.parse_args()
 
-    if args.build_index:
-        build_index()
-    elif args.ask:
-        ans, srcs = ask_question(args.ask)
-        print("\n=== Answer ===\n")
-        print(ans)
-        print("\n=== Top Sources ===")
-        for i, h in enumerate(srcs, 1):
-            d = h["doc"]
-            print(f"[{i}] {d['title']}  ({d.get('date','')})  {d['url']}")
-    else:
-        print("Nothing to do. Use --build-index or --ask \"...\"")
+    # if args.build_index:
+    #     build_index()
+    # elif args.ask:
+    #     ans, srcs = ask_question(args.ask)
+    #     print("\n=== Answer ===\n")
+    #     print(ans)
+    #     print("\n=== Top Sources ===")
+    #     for i, h in enumerate(srcs, 1):
+    #         d = h["doc"]
+    #         print(f"[{i}] {d['title']}  ({d.get('date','')})  {d['url']}")
+    # else:
+    #     print("Nothing to do. Use --build-index or --ask \"...\"")
